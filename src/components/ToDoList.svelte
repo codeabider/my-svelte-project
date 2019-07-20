@@ -6,7 +6,7 @@
 
   import { fade, fly, slide } from "svelte/transition";
   import { quintOut } from "svelte/easing";
-  import { createEventDispatcher } from "svelte";
+  import { createEventDispatcher, afterUpdate } from "svelte";
 
   export let toDoItems;
 
@@ -23,15 +23,21 @@
     allDone = true;
     dispatch("message", {
       text: "All items completed!",
-      itemsLeft: []
+      itemsToDo,
+      itemsDone
     });
   } else {
     allDone = false;
     dispatch("message", {
       text: "",
-      itemsLeft: itemsToDo
+      itemsToDo,
+      itemsDone
     });
   }
+
+  //   afterUpdate(() => {
+  //     allItems = [...toDoItems];
+  //   });
 
   const addItemToDo = () => {
     allItems = [
@@ -50,7 +56,9 @@
   };
 
   const onItemRemove = id => {
-    allItems = allItems.filter(item => item.id !== id);
+    allItems = allItems
+      .filter(item => item.id !== id)
+      .map((item, index) => ({ ...item, id: index + 1 }));
   };
 </script>
 

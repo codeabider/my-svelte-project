@@ -1,24 +1,3 @@
 import { writable } from 'svelte/store';
 
-const data = [
-  {
-    id: 1,
-    completed: false,
-    value: 'Milk',
-    editing: false
-  },
-  {
-    id: 2,
-    completed: false,
-    value: 'PS 4',
-    editing: false
-  },
-  {
-    id: 3,
-    completed: false,
-    value: 'Soundbox',
-    editing: false
-  }
-];
-
-export const toDoItems = writable(data);
+export const toDoItems = writable({ itemsToDo: [], itemsDone: [] });
